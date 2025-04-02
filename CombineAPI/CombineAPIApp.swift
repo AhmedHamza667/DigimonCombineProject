@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct CombineAPIApp: App {
+    @StateObject var digimonVM = DigimonViewModel(apiManager: APIServiceManager(), coreDataManager: CoreDataManager())
+    let persistanceController = PersistanceController.shared
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(digimonVM)
+                .environment(\.managedObjectContext, persistanceController.container.viewContext)
+
         }
     }
 }
